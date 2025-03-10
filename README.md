@@ -19,19 +19,20 @@ npm install workflow-data
 ## Quick Example
 
 ```js
-const dt = require("datatools");
+const wdata = require("workflow-data");
 
 // 1) Read CSV
-const data = dt.readCsv("./input.csv");
+const data = wdata.readCsv("./input.csv");
 
 // 2) Filter results
-const filtered = dt.filter(data, { status: "active" });
+const filtered = wdata.filter(data, { status: "active" });
 
 // 3) Pivot data
-const pivoted = dt.pivot(filtered, "department", "month", "hours");
+const pivoted = wdata.pivot(filtered, "department", "month", "hours");
 
 // 4) Write to JSON
-dt.writeJson("./output.json", pivoted);
+wdata.writeJson("./output.json", pivoted);
+```
 
 ## API Overview
 
@@ -49,4 +50,3 @@ dt.writeJson("./output.json", pivoted);
 ## License
 
 ISC License
-```
