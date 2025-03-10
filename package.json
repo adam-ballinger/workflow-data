@@ -1,0 +1,22 @@
+{
+  "name": "workflow-data",
+  "version": "1.0.0",
+  "description": "Small, simple data tools for rapid development of small projects in node.js.",
+  "main": "index.js",
+  "keywords": [
+    "data",
+    "json",
+    "csv",
+    "filter",
+    "pivot",
+    "tiny",
+    "small"
+  ],
+  "repository": {},
+  "author": "Adam Ballinger",
+  "license": "ISC",
+  "files": [
+    "index.js",
+    "README.md"
+  ]
+}
