@@ -1,5 +1,5 @@
 /**
- * @file Small, simple data tools for rapid development of small projects in node.js.
+ * @file Minimal, dependency-free data tools for rapid development of small projects in node.js.
  *
  * @module workflow-data
  */

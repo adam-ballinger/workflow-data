@@ -1,7 +1,7 @@
 {
   "name": "workflow-data",
-  "version": "1.0.1",
-  "description": "Small, simple data tools for rapid development of small projects in node.js.",
+  "version": "1.0.2",
+  "description": "Minimal, dependency-free data tools for rapid development of small projects in node.js.",
   "main": "index.js",
   "keywords": [
     "data",
@@ -10,11 +10,12 @@
     "filter",
     "pivot",
     "tiny",
-    "small"
+    "workflow",
+    "workflow-data"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/username/repo.git"
+    "url": "https://github.com/adam-ballinger/workflow-data.git"
   },
   "author": "Adam Ballinger",
   "license": "ISC",

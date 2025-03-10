@@ -1,6 +1,6 @@
 # workflow-data
 
-Small, simple data tools for rapid development of small projects in node.js.
+Minimal, dependency-free data tools for rapid development of small projects in node.js.
 
 ## Installation
 
