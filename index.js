@@ -3,7 +3,7 @@
  *
  * @module workflow-data
  */
-const fs = require("fs");
+import fs from "fs";
 
 /**
  * Reads a CSV file and returns an array of objects representing its rows.
@@ -382,7 +382,7 @@ function sort(data, keys, order = "asc") {
   return data.slice().sort(compare);
 }
 
-module.exports = {
+export {
   readCsv,
   readJson,
   filter,

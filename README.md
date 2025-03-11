@@ -1,6 +1,10 @@
+Here's a revised README optimized for npm, updated clearly for ES Modules:
+
+---
+
 # workflow-data
 
-Minimal, dependency-free data tools for rapid development of small projects in node.js.
+> Minimal, dependency-free data utilities for rapid Node.js workflows. CSV, JSON, filtering, pivot tables, and more.
 
 ## Installation
 
@@ -8,45 +12,37 @@ Minimal, dependency-free data tools for rapid development of small projects in n
 npm install workflow-data
 ```
 
-## Features
-
-- **Read & Write**: Read and write CSV, JSON, and HTML
-- **Filter & Update**: Filter data based on exact or array-based criteria and update in place
-- **Erase**: Remove objects matching specified conditions
-- **Pivot**: Easily pivot datasets by row, column, and value keys
-- **Sum**: Sum numeric properties across arrays of objects
-
-## Quick Example
+## Quick Start
 
 ```js
-const wdata = require("workflow-data");
+import { readCsv, filter, pivot, writeJson } from "workflow-data";
 
-// 1) Read CSV
-const data = wdata.readCsv("./input.csv");
+// Read CSV data
+const records = readCsv("data.csv");
 
-// 2) Filter results
-const filtered = wdata.filter(data, { status: "active" });
+// Filter active records
+const active = filter(records, { status: "active" });
 
-// 3) Pivot data
-const pivoted = wdata.pivot(filtered, "department", "month", "hours");
+// Pivot data by department and month, summing hours
+const summary = pivot(active, "department", "month", "hours");
 
-// 4) Write to JSON
-wdata.writeJson("./output.json", pivoted);
+// Write to JSON file
+writeJson("summary.json", summary);
 ```
 
-## API Overview
+## Features
 
-- **`readCsv(filePath)`:** Returns an array of objects from a CSV file.
-- **`readJson(filePath)`:** Parses and returns JSON data from a file.
-- **`filter(data, filterObject)`:** Filters an array of objects by exact or array-based criteria.
-- **`update(data, filterObject, updates)`:** Updates objects in place based on filter criteria.
-- **`erase(data, filterObject)`:** Removes objects matching given filter criteria.
-- **`pivot(data, rowKey, colKey, valueKey)`:** Pivots an array of objects for summarized data.
-- **`writeCsv(filePath, data)`:** Writes an array of objects to CSV.
-- **`writeJson(filePath, json)`:** Writes a JSON object to file.
-- **`writeHtml(filePath, html)`:** Writes raw HTML to file.
-- **`sumProperty(data, key)`:** Sums numeric values in an array of objects by key.
+- 📂 **Read & Write:** CSV, JSON, HTML
+- 🔎 **Filter & Update:** Powerful, intuitive filtering and in-place updates
+- 📊 **Pivot & Sum:** Quickly summarize and aggregate datasets
+- 🌳 **Tree Shaking:** ES Modules for optimized builds and minimal bundle size
+
+[Full API Documentation →](https://github.com/adam-ballinger/workflow-data/wiki)
+
+## Author
+
+Adam Ballinger
 
 ## License
 
-ISC License
+ISC
