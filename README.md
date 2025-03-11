@@ -1,10 +1,4 @@
-Here's a revised README optimized for npm, updated clearly for ES Modules:
-
----
-
-# workflow-data
-
-> Minimal, dependency-free data utilities for rapid Node.js workflows. CSV, JSON, filtering, pivot tables, and more.
+Minimal, dependency-free data utilities for rapid Node.js workflows. CSV, JSON, filtering, pivot tables, and more.
 
 ## Installation
 
@@ -25,24 +19,19 @@ const active = filter(records, { status: "active" });
 
 // Pivot data by department and month, summing hours
 const summary = pivot(active, "department", "month", "hours");
-
-// Write to JSON file
-writeJson("summary.json", summary);
 ```
 
 ## Features
 
-- 📦 **Zero Dependencies:** Lightweight standalone module [![Bundlephobia Minified Size](https://badgen.net/bundlephobia/min/workflow-data)]
+- 📦 **Zero Dependencies:** Lightweight standalone module
 - 📂 **Read & Write:** CSV, JSON, HTML
-- 🔎 **Filter & Update:** Powerful, intuitive filtering and in-place updates
+- 🔎 **Filter & Update:** Intuitive filtering and in-place updates
 - 📊 **Pivot & Sum:** Quickly summarize and aggregate datasets
 - 🌳 **Tree Shaking:** ES Modules for optimized builds and minimal bundle size
 
-[Full API Documentation →](https://github.com/adam-ballinger/workflow-data/wiki)
+## Full API Docs
 
-## Author
-
-Adam Ballinger
+[GitHub/wiki](https://github.com/adam-ballinger/workflow-data/wiki)
 
 ## License
 

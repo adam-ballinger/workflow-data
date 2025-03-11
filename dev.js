@@ -1,4 +1,4 @@
-import { filter } from "./index.js";
+import { filter, update, erase } from "./index.js";
 
 const data = [
   {
@@ -19,8 +19,20 @@ const data = [
     item: "83b4",
     total: 300,
   },
+  {
+    _id: "d43a",
+    customer: "81de",
+    item: "83b4",
+    total: 10000,
+  },
 ];
+
+update(data, {}, { org: "Oklahoma City" });
+
+erase(data, { total: 10000 });
 
 const filtered_data = filter(data, { item: "83b4" });
 
 console.log(filtered_data);
+
+console.log();

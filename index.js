@@ -71,6 +71,21 @@ function readJson(filePath) {
 }
 
 /**
+ * Determines if an object matches the given criteria.
+ *
+ * @param {Object} obj - The object to test.
+ * @param {Object} criteria - The filter criteria.
+ * @returns {boolean} True if the object meets all criteria.
+ */
+function matches(obj, criteria) {
+  return Object.keys(criteria).every((key) =>
+    Array.isArray(criteria[key])
+      ? criteria[key].includes(obj[key])
+      : obj[key] === criteria[key]
+  );
+}
+
+/**
  * Filters an array of objects based on the provided criteria.
  *
  * @param {Array<Object>} data - The array of objects to filter.
@@ -84,15 +99,7 @@ function filter(data, filterCriteria) {
   if (typeof filterCriteria !== "object" || filterCriteria === null) {
     throw new TypeError("filter: filter parameter must be a non-null object.");
   }
-  return data.filter((obj) => {
-    return Object.keys(filterCriteria).every((key) => {
-      const filterValue = filterCriteria[key];
-      if (Array.isArray(filterValue)) {
-        return filterValue.includes(obj[key]);
-      }
-      return obj[key] === filterValue;
-    });
-  });
+  return data.filter((obj) => matches(obj, filterCriteria));
 }
 
 /**
@@ -113,17 +120,8 @@ function update(data, filterCriteria, updates) {
     throw new TypeError("update: updates parameter must be a non-null object.");
   }
   data.forEach((obj) => {
-    const match = Object.keys(filterCriteria).every((key) => {
-      const filterValue = filterCriteria[key];
-      if (Array.isArray(filterValue)) {
-        return filterValue.includes(obj[key]);
-      }
-      return obj[key] === filterValue;
-    });
-    if (match) {
-      Object.entries(updates).forEach(([key, value]) => {
-        obj[key] = value;
-      });
+    if (matches(obj, filterCriteria)) {
+      Object.assign(obj, updates);
     }
   });
 }
@@ -142,14 +140,7 @@ function erase(data, filterCriteria) {
     throw new TypeError("erase: filter parameter must be a non-null object.");
   }
   for (let i = data.length - 1; i >= 0; i--) {
-    const match = Object.keys(filterCriteria).every((key) => {
-      const filterValue = filterCriteria[key];
-      if (Array.isArray(filterValue)) {
-        return filterValue.includes(data[i][key]);
-      }
-      return data[i][key] === filterValue;
-    });
-    if (match) {
+    if (matches(data[i], filterCriteria)) {
       data.splice(i, 1);
     }
   }
@@ -213,8 +204,8 @@ function pivot(data, rowKey, colKey, valueKey) {
  * @returns {Array<any>} An array of values from the specified key.
  *
  * @example
- * const data = [{ name: 'Alice' }, { name: 'Bob' }];
- * const names = pluck(data, 'name'); // ['Alice', 'Bob']
+ * const data = [{ name: 'Alice' }, { name: 'Bob' }, { name: 'Alice' }];
+ * const names = pluck(data, 'name'); // ['Alice', 'Bob', "Alice"]
  */
 function pluck(data, key) {
   return data.map((item) => item[key]);
@@ -313,51 +304,6 @@ function sumProperty(data, key) {
   }, 0);
 }
 
-/**
- * Sorts an array of objects by the specified key(s) and order.
- *
- * @param {Array<Object>} data - The array of objects to sort.
- * @param {string|string[]} keys - A key or an array of keys to sort by.
- * @param {string} [order="asc"] - The sort order: "asc" for ascending or "desc" for descending.
- * @returns {Array<Object>} A new array of objects sorted by the given key(s).
- *
- * @throws {TypeError} If data is not an array, or if keys is not a string or an array of strings,
- *                     or if order is not "asc" or "desc".
- */
-function sort(data, keys, order = "asc") {
-  if (!Array.isArray(data)) {
-    throw new TypeError("sort: data must be an array.");
-  }
-  if (typeof keys === "string") {
-    keys = [keys];
-  } else if (!Array.isArray(keys)) {
-    throw new TypeError("sort: keys must be a string or an array of strings.");
-  }
-  keys.forEach((key) => {
-    if (typeof key !== "string") {
-      throw new TypeError("sort: each key must be a string.");
-    }
-  });
-  if (order !== "asc" && order !== "desc") {
-    throw new TypeError("sort: order must be 'asc' or 'desc'.");
-  }
-
-  const compare = (a, b) => {
-    for (const key of keys) {
-      if (a[key] < b[key]) {
-        return order === "asc" ? -1 : 1;
-      }
-      if (a[key] > b[key]) {
-        return order === "asc" ? 1 : -1;
-      }
-    }
-    return 0;
-  };
-
-  // Return a new sorted array to avoid mutating the original.
-  return data.slice().sort(compare);
-}
-
 export {
   readCsv,
   readJson,
@@ -370,5 +316,4 @@ export {
   writeCsv,
   writeJson,
   sumProperty,
-  sort,
 };
