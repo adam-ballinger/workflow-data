@@ -32,6 +32,7 @@ writeJson("summary.json", summary);
 
 ## Features
 
+- 📦 **Zero Dependencies:** Lightweight standalone module [![Bundlephobia Minified Size](https://badgen.net/bundlephobia/min/workflow-data)]
 - 📂 **Read & Write:** CSV, JSON, HTML
 - 🔎 **Filter & Update:** Powerful, intuitive filtering and in-place updates
 - 📊 **Pivot & Sum:** Quickly summarize and aggregate datasets

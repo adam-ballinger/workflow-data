@@ -294,27 +294,6 @@ function writeJson(filePath, data) {
 }
 
 /**
- * Writes an HTML string to a file.
- *
- * @param {string} filePath - The path to the output HTML file.
- * @param {string} html - The HTML content to write.
- *
- * @example
- * const htmlContent = '<html><body><h1>Hello World</h1></body></html>';
- * writeHtml('index.html', htmlContent);
- *
- * @throws {Error} When writing the file fails.
- */
-function writeHtml(filePath, html) {
-  try {
-    fs.writeFileSync(filePath, html, "utf8");
-  } catch (error) {
-    console.error(`Error writing HTML file at ${filePath}: ${error.message}`);
-    throw error;
-  }
-}
-
-/**
  * Sums the numeric values of a specified property across an array of objects.
  *
  * Non-existent or non-numeric properties are treated as zero.
@@ -341,9 +320,6 @@ function sumProperty(data, key) {
  * @param {string|string[]} keys - A key or an array of keys to sort by.
  * @param {string} [order="asc"] - The sort order: "asc" for ascending or "desc" for descending.
  * @returns {Array<Object>} A new array of objects sorted by the given key(s).
- *
- * @example
- * const sorted = sort(data, 'name', 'asc');
  *
  * @throws {TypeError} If data is not an array, or if keys is not a string or an array of strings,
  *                     or if order is not "asc" or "desc".
@@ -392,7 +368,6 @@ export {
   pluck,
   pluckUnique,
   writeCsv,
-  writeHtml,
   writeJson,
   sumProperty,
   sort,
