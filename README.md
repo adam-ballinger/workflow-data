@@ -29,10 +29,8 @@ const summary = pivot(active, "department", "month", "hours");
 - 📊 **Pivot & Sum:** Quickly summarize and aggregate datasets
 - 🌳 **Tree Shaking:** ES Modules for optimized builds and minimal bundle size
 
-## Full API Docs
+## Info
 
-[GitHub/wiki](https://github.com/adam-ballinger/workflow-data/wiki)
-
-## License
-
-ISC
+Full API Docs: [GitHub/wiki](https://github.com/adam-ballinger/workflow-data/wiki)
+License: ISC
+Author: Adam Ballinger
