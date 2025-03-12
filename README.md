@@ -31,6 +31,8 @@ const summary = pivot(active, "department", "month", "hours");
 
 ## Info
 
-Full API Docs: [GitHub/wiki](https://github.com/adam-ballinger/workflow-data/wiki)
+Full API Docs: Coming Soon
+
 License: ISC
+
 Author: Adam Ballinger
