@@ -1,6 +1,6 @@
 {
   "name": "workflow-data",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "index.js",
   "type": "module",
   "description": "Minimal, dependency-free data tools for rapid development of small projects in node.js.",
