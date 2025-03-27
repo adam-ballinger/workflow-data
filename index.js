@@ -304,6 +304,162 @@ function sumProperty(data, key) {
   }, 0);
 }
 
+/**
+ * Merges two arrays of objects based on a shared key.
+ *
+ * @param {Array<Object>[]} arrays - Array containing two arrays to merge.
+ * @param {string} key - The key to merge objects on.
+ * @returns {Object[]} Merged array of objects.
+ */
+function merge(arrays, key) {
+  const [dataA, dataB] = arrays;
+  const mergedMap = new Map();
+
+  dataA.forEach((item) => mergedMap.set(item[key], { ...item }));
+  dataB.forEach((item) => {
+    const current = mergedMap.get(item[key]) || {};
+    mergedMap.set(item[key], { ...current, ...item });
+  });
+
+  return Array.from(mergedMap.values());
+}
+
+/**
+ * Removes specified properties from every object in an array in place.
+ *
+ * @param {Object[]} arr - Array of objects.
+ * @param {string} props - Array of properties to remove.
+ */
+function removeProps(arr, props) {
+  props.forEach((property) => {
+    arr.forEach((obj) => delete obj[property]);
+  });
+}
+
+/**
+ * Summarizes an array of objects by returning the total count and unique property names.
+ *
+ * @param {Object[]} data - Array of objects to summarize.
+ * @returns {string} A summary string.
+ */
+function summary(data) {
+  const documents = data.length;
+  const properties = new Set();
+  const example = data[0];
+
+  data.forEach((obj) => {
+    Object.keys(obj).forEach((key) => properties.add(key));
+  });
+
+  return { documents, properties: Array.from(properties), example };
+}
+
+/**
+ * Modifies objects in an array in place based on a transformation function,
+ * optionally only modifying objects that match filter criteria.
+ *
+ * @param {Object[]} data - Array of objects.
+ * @param {Object|null} filterCriteria - Criteria to select objects to transform, or null for all.
+ * @param {Function} transformFn - Callback function that takes an object and modifies it.
+ */
+function transform(data, filterCriteria, transformFn) {
+  data.forEach((obj) => {
+    if (!filterCriteria || matches(obj, filterCriteria)) {
+      Object.assign(obj, transformFn(obj));
+    }
+  });
+}
+
+/**
+ * Sorts an array of objects by a specified property in place.
+ *
+ * Supports sorting of strings, numbers, and Date objects.
+ *
+ * @param {Array<Object>} data - The array of objects to sort.
+ * @param {string} key - The property key to sort by.
+ * @param {string} [order='asc'] - The sort order: 'asc' for ascending, 'desc' for descending.
+ *
+ * @throws {TypeError} If data is not an array or key is not a string.
+ */
+function sort(data, key, order = "asc") {
+  if (!Array.isArray(data)) {
+    throw new TypeError("sortByInPlace: data must be an array.");
+  }
+  if (typeof key !== "string") {
+    throw new TypeError("sortByInPlace: key must be a string.");
+  }
+  data.sort((a, b) => {
+    const aVal = a[key];
+    const bVal = b[key];
+
+    // Handle undefined values
+    if (aVal === undefined && bVal === undefined) return 0;
+    if (aVal === undefined) return order === "asc" ? -1 : 1;
+    if (bVal === undefined) return order === "asc" ? 1 : -1;
+
+    // Compare Date objects
+    if (aVal instanceof Date && bVal instanceof Date) {
+      return order === "asc"
+        ? aVal.getTime() - bVal.getTime()
+        : bVal.getTime() - aVal.getTime();
+    }
+
+    // Compare numbers
+    if (typeof aVal === "number" && typeof bVal === "number") {
+      return order === "asc" ? aVal - bVal : bVal - aVal;
+    }
+
+    // Compare strings
+    if (typeof aVal === "string" && typeof bVal === "string") {
+      return order === "asc"
+        ? aVal.localeCompare(bVal)
+        : bVal.localeCompare(aVal);
+    }
+
+    // Fallback: convert both values to strings and compare
+    return order === "asc"
+      ? String(aVal).localeCompare(String(bVal))
+      : String(bVal).localeCompare(String(aVal));
+  });
+}
+
+/**
+ * Iterates over an array of objects, applying a filter and executing a callback with the index and object.
+ *
+ * @param {Array<Object>} data - The array of objects to iterate over.
+ * @param {Function} filterCriteria - A function that returns true if the object should be processed.
+ * @param {Function} callback - A function called for each filtered object. Receives (i, obj).
+ */
+function iterate(data, filterCriteria, callback) {
+  for (let i = 0; i < data.length; i += 1) {
+    if (filterCriteria(data[i])) {
+      // The callback can reference 'data' if needed to access data[i - 1] or any other element.
+      callback(i, data[i]);
+    }
+  }
+}
+
+/**
+ * Converts an array of objects into a key-value mapping object based on specified object properties.
+ *
+ * @param {Array<Object>} data - The array of objects to map.
+ * @param {string} key - The property name to use as keys in the resulting map.
+ * @param {string} value - The property name to use as values in the resulting map.
+ * @returns {Object} A mapping object where keys and values are derived from specified properties.
+ *
+ * @example
+ * const users = [{ id: 'a1', name: 'Alice' }, { id: 'b2', name: 'Bob' }];
+ * const idNameMap = getMap(users, 'id', 'name');
+ * // { a1: 'Alice', b2: 'Bob' }
+ */
+function getMap(data, key, value) {
+  const map = {};
+  data.forEach((obj) => {
+    map[obj[key]] = obj[value];
+  });
+  return map;
+}
+
 export {
   readCsv,
   readJson,
@@ -316,4 +472,11 @@ export {
   writeCsv,
   writeJson,
   sumProperty,
+  merge,
+  removeProps,
+  summary,
+  transform,
+  sort,
+  iterate,
+  getMap,
 };
